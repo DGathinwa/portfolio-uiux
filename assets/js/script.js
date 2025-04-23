@@ -19,20 +19,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Form validation & fake submission success
-  const form = document.querySelector('form');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent real form submission
+// Form validation
+const form = document.querySelector('form');
+form.addEventListener('submit', function (e) {
+  const name = form.querySelector('input[type="text"]').value.trim();
+  const email = form.querySelector('input[type="email"]').value.trim();
+  const phone = form.querySelector('input[type="tel"]').value.trim();
+  const subject = form.querySelector('input[type="text"]:nth-of-type(2)').value.trim();
+  const message = form.querySelector('textarea').value.trim();
 
-    const name = form.querySelector('input[type="text"]').value.trim();
-    const email = form.querySelector('input[type="email"]').value.trim();
-    const message = form.querySelector('textarea').value.trim();
+  if (!name || !email || !message) {
+    e.preventDefault();
+    alert("Please fill out all required fields before submitting.");
+  } else {
+    alert("Form submitted successfully!");  // Simulate form submission
+  }
+});
 
-    if (!name || !email || !message) {
-      alert("Please fill out all fields before submitting.");
-    } else {
-      alert(`Thanks for reaching out, ${name}! I'll get back to you soon.`);
-      form.reset(); // Clear the form
+const sections = document.querySelectorAll('.section');
+
+const isInView = (section) => {
+  const rect = section.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom >= 0;
+};
+
+const checkSections = () => {
+  sections.forEach((section) => {
+    if (isInView(section)) {
+      section.classList.add('visible');
     }
   });
-});
+};
+
+window.addEventListener('scroll', checkSections);
+checkSections();  // Check on page load
