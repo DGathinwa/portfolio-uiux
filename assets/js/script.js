@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 // Form validation
-const form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
+  e.preventDefault();
   const name = form.querySelector('input[type="text"]').value.trim();
   const email = form.querySelector('input[type="email"]').value.trim();
   const phone = form.querySelector('input[type="tel"]').value.trim();
@@ -29,11 +29,12 @@ form.addEventListener('submit', function (e) {
   const message = form.querySelector('textarea').value.trim();
 
   if (!name || !email || !message) {
-    e.preventDefault();
-    alert("Please fill out all required fields before submitting.");
-  } else {
-    alert("Form submitted successfully!");  // Simulate form submission
+    alert("Please fill in all required fields.");
+    return;
   }
+
+  alert("Form submitted successfully!");
+  form.reset();
 });
 
 const sections = document.querySelectorAll('.section');
